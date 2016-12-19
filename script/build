@@ -4,6 +4,10 @@
 #
 set -e
 
-echo "[script/build] Nothing to build..."
+PKGNAME=`basename $(pwd)`
+
+echo "[script/build] Building $PKGNAME..."
+mkdir -p builds
+go build -o builds/$PKGNAME main.go
 
 # vim: ft=sh:
