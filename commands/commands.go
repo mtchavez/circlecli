@@ -4,19 +4,8 @@ import "github.com/urfave/cli"
 
 // AllCommands contains the commands for the CLI
 var AllCommands []cli.Command
+var GlobalFlags []cli.Flag
 var (
-	userFlag = cli.StringFlag{
-		Name:   "user, u",
-		Value:  "",
-		Usage:  "user or org",
-		EnvVar: "CIRCLECI_ORG,CIRCLECI_USER",
-	}
-	projectFlag = cli.StringFlag{
-		Name:   "project, p",
-		Value:  "",
-		Usage:  "project name of repository",
-		EnvVar: "CIRCLECI_PROJECT",
-	}
 	branchFlag = cli.StringFlag{
 		Name:   "branch, b",
 		Value:  "master",
@@ -39,6 +28,24 @@ var (
 		Value: "",
 		Usage: "offset of builds to start from",
 	}
+	projectFlag = cli.StringFlag{
+		Name:   "project, p",
+		Value:  "",
+		Usage:  "project name of repository",
+		EnvVar: "CIRCLECI_PROJECT",
+	}
+	tokenFlag = cli.StringFlag{
+		Name:   "token, t",
+		Value:  "",
+		Usage:  "circle-token param for authentication",
+		EnvVar: "CIRCLECI_TOKEN",
+	}
+	userFlag = cli.StringFlag{
+		Name:   "user, u",
+		Value:  "",
+		Usage:  "user or org",
+		EnvVar: "CIRCLECI_ORG,CIRCLECI_USER",
+	}
 )
 
 func init() {
@@ -46,5 +53,8 @@ func init() {
 		RecentBuildsCmd,
 		BuildsCmd,
 		BuildsBranchCmd,
+	}
+	GlobalFlags = []cli.Flag{
+		tokenFlag,
 	}
 }
