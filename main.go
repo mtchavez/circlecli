@@ -21,5 +21,6 @@ func main() {
 	app.Version = AppVersion
 	app.EnableBashCompletion = true
 	app.Commands = commands.AllCommands
+	app.Flags = commands.GlobalFlags
 	app.Run(os.Args)
 }
