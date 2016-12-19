@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# Build package
+#
+set -e
+
+echo "[script/build] Nothing to build..."
+
+# vim: ft=sh:
