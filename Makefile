@@ -8,7 +8,7 @@ ci: deps test
 
 deps:
 	@go get -u -v $(GOPKGS)
-	@if [ `which godep` ]; then godep restore; fi
+	@if [ `which godep` ] && [ -f ./Godeps/Godeps.json ]; then godep restore; fi
 
 build: pre_test
 	@./script/build
