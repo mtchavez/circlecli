@@ -28,7 +28,7 @@ var buildsFlags = []cli.Flag{
 }
 
 func buildsAction(context *cli.Context) error {
-	token := os.Getenv("CIRCLECI_TOKEN")
+	token := context.GlobalString("token")
 	client := circleci.NewClient(token)
 	padding := 1
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
