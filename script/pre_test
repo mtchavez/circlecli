@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Run pre test checks
+#
+set -e
+
+echo '[script/pre_test] Running go vet'
+go vet ./...
+
+echo '[script/pre_test] Running golint'
+golint ./...
+
+# vim: ft=sh:

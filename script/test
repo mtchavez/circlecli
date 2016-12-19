@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# Run tests
+#
+set -e
+
+echo '[script/test] Running tests'
+PACKAGES=$(go list ./... | grep -v '/vendor/')
+go test -cover $PACKAGES
+
+# vim: ft=sh:
