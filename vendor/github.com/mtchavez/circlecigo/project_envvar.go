@@ -1,7 +1,6 @@
 package circleci
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -24,12 +23,11 @@ func (client *Client) EnvVars(username, project string) ([]*EnvVar, *APIResponse
 // AddEnvVar calls the /project/:username/:project/envvar endpoint
 // to set an ENV variable for the project builds
 func (client *Client) AddEnvVar(username, project, name, value string) (*EnvVar, *APIResponse) {
-	envVar := &EnvVar{}
+	addedVar := &EnvVar{}
 	addVar := &EnvVar{Name: name, Value: value}
-	body, _ := json.Marshal(addVar)
 	path := fmt.Sprintf("project/%s/%s/envvar", username, project)
-	apiResp := client.request(http.MethodPost, path, nil, body, envVar)
-	return envVar, apiResp
+	apiResp := client.request(http.MethodPost, path, nil, addVar, addedVar)
+	return addedVar, apiResp
 }
 
 // GetEnvVar calls the /project/:username/:project/envvar/:name endpoint

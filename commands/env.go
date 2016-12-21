@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/tabwriter"
 
 	circleci "github.com/mtchavez/circlecigo"
@@ -66,12 +67,28 @@ func envGetAction(context *cli.Context) error {
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
 
 	envVar, _ := client.GetEnvVar(context.String("user"), context.String("project"), context.String("var"))
-	fmt.Fprintln(writer, "Var\tValue\t")
+	fmt.Fprintln(writer, "Name\tValue\t")
 	fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t", envVar.Name, envVar.Value))
 	writer.Flush()
 	return nil
 }
 
 func envSetAction(context *cli.Context) error {
+	varInput := strings.Split(context.String("var"), "=")
+	envName := ""
+	envValue := ""
+	if len(varInput) == 2 {
+		envName = varInput[0]
+		envValue = varInput[1]
+	}
+	token := context.GlobalString("token")
+	client := circleci.NewClient(token)
+	padding := 1
+	writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
+
+	envVar, _ := client.AddEnvVar(context.String("user"), context.String("project"), envName, envValue)
+	fmt.Fprintln(writer, "Name\tValue\t")
+	fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t", envVar.Name, envVar.Value))
+	writer.Flush()
 	return nil
 }
