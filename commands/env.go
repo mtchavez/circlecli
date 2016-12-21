@@ -109,9 +109,8 @@ func envDeleteAction(context *cli.Context) error {
 	if resp.Success() {
 		fmt.Printf("Removed %s\n", varName)
 		return nil
-	} else {
-		fmt.Printf("Failed removing %s\n", varName)
-		fmt.Println(string(resp.Body))
-		return resp.Error
 	}
+	fmt.Printf("Failed removing %s\n", varName)
+	fmt.Println(string(resp.Body))
+	return resp.Error
 }
