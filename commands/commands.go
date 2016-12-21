@@ -12,6 +12,11 @@ var (
 		Usage:  "project branch name, default master",
 		EnvVar: "CIRCLECI_BRANCH",
 	}
+	envVarFlag = cli.StringFlag{
+		Name:  "var",
+		Value: "",
+		Usage: "use VAR name for get and VAR=value for set",
+	}
 	filterFlag = cli.StringFlag{
 		Name:   "filter, f",
 		Value:  "",
