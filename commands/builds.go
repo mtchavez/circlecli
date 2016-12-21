@@ -22,6 +22,7 @@ var BuildsCmd = cli.Command{
 var buildsFlags = []cli.Flag{
 	userFlag,
 	projectFlag,
+	branchFlag,
 	filterFlag,
 	limitFlag,
 	offsetFlag,
@@ -42,7 +43,13 @@ func buildsAction(context *cli.Context) error {
 	if context.String("limit") != "" {
 		params.Set("limit", context.String("limit"))
 	}
-	builds, _ := client.ProjectRecentBuilds(context.String("user"), context.String("project"), params)
+	branch := context.String("branch")
+	var builds []*circleci.Build
+	if branch != "" {
+		builds, _ = client.ProjectRecentBuildsBranch(context.String("user"), context.String("project"), branch, params)
+	} else {
+		builds, _ = client.ProjectRecentBuilds(context.String("user"), context.String("project"), params)
+	}
 	fmt.Fprintln(writer, "Branch\tUser\tStatus\t")
 	for _, build := range builds {
 		fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t%s\t", build.Branch, build.CommitterName, build.Status))

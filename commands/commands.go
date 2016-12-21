@@ -4,11 +4,13 @@ import "github.com/urfave/cli"
 
 // AllCommands contains the commands for the CLI
 var AllCommands []cli.Command
+
+// GlobalFlags contains the flags allowed for each command
 var GlobalFlags []cli.Flag
 var (
 	branchFlag = cli.StringFlag{
 		Name:   "branch, b",
-		Value:  "master",
+		Value:  "",
 		Usage:  "project branch name, default master",
 		EnvVar: "CIRCLECI_BRANCH",
 	}
@@ -55,7 +57,6 @@ var (
 
 func init() {
 	AllCommands = []cli.Command{
-		BuildsBranchCmd,
 		BuildsCmd,
 		EnvCmd,
 		RecentBuildsCmd,
