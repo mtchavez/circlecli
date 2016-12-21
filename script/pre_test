@@ -8,6 +8,6 @@ echo '[script/pre_test] Running go vet'
 go vet ./...
 
 echo '[script/pre_test] Running golint'
-golint ./...
+go list ./... | grep -v /vendor/ | xargs -L1 golint
 
 # vim: ft=sh:
