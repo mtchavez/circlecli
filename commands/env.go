@@ -26,10 +26,11 @@ var envFlags = []cli.Flag{
 
 var envSubcommands = []cli.Command{
 	{
-		Name:   "list",
-		Usage:  "all environment variables",
-		Action: envListAction,
-		Flags:  envFlags,
+		Name:    "list",
+		Aliases: []string{"ls"},
+		Usage:   "all environment variables",
+		Action:  envListAction,
+		Flags:   envFlags,
 	},
 	{
 		Name:   "get",
@@ -42,6 +43,13 @@ var envSubcommands = []cli.Command{
 		Usage:  "a value for an environment variable",
 		Action: envSetAction,
 		Flags:  append(envFlags, envVarFlag),
+	},
+	{
+		Name:    "delete",
+		Aliases: []string{"del", "rm"},
+		Usage:   "an environment variable",
+		Action:  envDeleteAction,
+		Flags:   append(envFlags, envVarFlag),
 	},
 }
 
@@ -91,4 +99,19 @@ func envSetAction(context *cli.Context) error {
 	fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t", envVar.Name, envVar.Value))
 	writer.Flush()
 	return nil
+}
+
+func envDeleteAction(context *cli.Context) error {
+	token := context.GlobalString("token")
+	client := circleci.NewClient(token)
+	varName := context.String("var")
+	_, resp := client.DeleteEnvVar(context.String("user"), context.String("project"), varName)
+	if resp.Success() {
+		fmt.Printf("Removed %s\n", varName)
+		return nil
+	} else {
+		fmt.Printf("Failed removing %s\n", varName)
+		fmt.Println(string(resp.Body))
+		return resp.Error
+	}
 }
