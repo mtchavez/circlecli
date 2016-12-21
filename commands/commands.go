@@ -50,9 +50,10 @@ var (
 
 func init() {
 	AllCommands = []cli.Command{
-		RecentBuildsCmd,
-		BuildsCmd,
 		BuildsBranchCmd,
+		BuildsCmd,
+		EnvCmd,
+		RecentBuildsCmd,
 	}
 	GlobalFlags = []cli.Flag{
 		tokenFlag,
