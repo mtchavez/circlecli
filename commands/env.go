@@ -23,21 +23,24 @@ var envFlags = []cli.Flag{
 	projectFlag,
 }
 
-var envSubcommands = cli.Commands{
-	cli.Command{
+var envSubcommands = []cli.Command{
+	{
 		Name:   "list",
+		Usage:  "all environment variables",
 		Action: envListAction,
 		Flags:  envFlags,
 	},
-	cli.Command{
+	{
 		Name:   "get",
+		Usage:  "value of an environment variable",
 		Action: envGetAction,
-		Flags:  envFlags,
+		Flags:  append(envFlags, envVarFlag),
 	},
-	cli.Command{
+	{
 		Name:   "set",
+		Usage:  "a value for an environment variable",
 		Action: envSetAction,
-		Flags:  envFlags,
+		Flags:  append(envFlags, envVarFlag),
 	},
 }
 
@@ -57,6 +60,15 @@ func envListAction(context *cli.Context) error {
 }
 
 func envGetAction(context *cli.Context) error {
+	token := context.GlobalString("token")
+	client := circleci.NewClient(token)
+	padding := 1
+	writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
+
+	envVar, _ := client.GetEnvVar(context.String("user"), context.String("project"), context.String("var"))
+	fmt.Fprintln(writer, "Var\tValue\t")
+	fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t", envVar.Name, envVar.Value))
+	writer.Flush()
 	return nil
 }
 
