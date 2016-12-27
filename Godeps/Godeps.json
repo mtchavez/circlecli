@@ -5,7 +5,7 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/mtchavez/circlecigo",
-			"Rev": "d3ac32638f6ddbc0dc880f024c0d7e3eff4cf163"
+			"Rev": "cad2543936db74fca7d25fc0d508fdf71ed5639e"
 		},
 		{
 			"ImportPath": "github.com/urfave/cli",
