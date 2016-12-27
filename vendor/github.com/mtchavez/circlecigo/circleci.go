@@ -41,11 +41,12 @@ type APIMessageResponse struct {
 // Success - Returns a boolean for determining if an APIResponse is successful
 // Will return false for any non 2xx status codes.
 func (resp *APIResponse) Success() bool {
-	if resp.Error != nil {
+	errResp := resp.Error
+	if resp.Response == nil && errResp != nil {
 		return false
 	}
 	statusCode := resp.Response.StatusCode
-	if statusCode >= 200 && statusCode < 300 {
+	if errResp == nil && statusCode >= 200 && statusCode < 300 {
 		return true
 	}
 	return false
