@@ -57,6 +57,7 @@ var (
 
 func init() {
 	AllCommands = []cli.Command{
+		BuildCmd,
 		BuildsCmd,
 		ClearCacheCmd,
 		EnvCmd,
