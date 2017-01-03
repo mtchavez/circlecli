@@ -50,9 +50,9 @@ func buildsAction(context *cli.Context) error {
 	} else {
 		builds, _ = client.ProjectRecentBuilds(context.String("user"), context.String("project"), params)
 	}
-	fmt.Fprintln(writer, "Branch\tUser\tStatus\t")
+	fmt.Fprintln(writer, "Build\tBranch\tUser\tStatus\t")
 	for _, build := range builds {
-		fmt.Fprintln(writer, fmt.Sprintf("%s\t%s\t%s\t", build.Branch, build.CommitterName, build.Status))
+		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t", build.BuildNum, build.Branch, build.CommitterName, build.Status))
 	}
 	writer.Flush()
 	return nil
