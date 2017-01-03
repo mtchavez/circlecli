@@ -31,6 +31,12 @@ var buildSubcommands = []cli.Command{
 		Action: buildCancelAction,
 		Flags:  append(buildFlags, buildNumFlag),
 	},
+	{
+		Name:   "retry",
+		Usage:  "retry a specific build",
+		Action: buildRetryAction,
+		Flags:  append(buildFlags, buildNumFlag),
+	},
 }
 
 func buildProjectAction(context *cli.Context) error {
@@ -63,5 +69,22 @@ func buildCancelAction(context *cli.Context) error {
 		return nil
 	}
 	failed := errors.New("Failed to cancel build")
+	return failed
+}
+
+func buildRetryAction(context *cli.Context) error {
+	token := context.GlobalString("token")
+	buildNum := context.Int("num")
+	client := circleci.NewClient(token)
+	build, resp := client.RetryBuild(context.String("user"), context.String("project"), buildNum)
+	if resp.Success() {
+		padding := 1
+		writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
+		fmt.Fprintln(writer, "Build\tBranch\tStatus\tURL")
+		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t", build.BuildNum, build.Branch, build.Status, build.BuildURL))
+		writer.Flush()
+		return nil
+	}
+	failed := errors.New("Failed to retry build")
 	return failed
 }
