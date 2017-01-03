@@ -130,7 +130,7 @@ func (client *Client) GetBuild(username, project string, buildNum int) (*Build, 
 func (client *Client) RetryBuild(username, project string, buildNum int) (*Build, *APIResponse) {
 	build := &Build{}
 	path := fmt.Sprintf("project/%s/%s/%d/retry", username, project, buildNum)
-	apiResp := client.request(http.MethodGet, path, nil, nil, build)
+	apiResp := client.request(http.MethodPost, path, nil, nil, build)
 	return build, apiResp
 }
 
