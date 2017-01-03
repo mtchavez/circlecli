@@ -8,6 +8,11 @@ var AllCommands []cli.Command
 // GlobalFlags contains the flags allowed for each command
 var GlobalFlags []cli.Flag
 var (
+	buildNumFlag = cli.StringFlag{
+		Name:  "num",
+		Value: "",
+		Usage: "build number",
+	}
 	branchFlag = cli.StringFlag{
 		Name:   "branch, b",
 		Value:  "",
