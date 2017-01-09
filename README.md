@@ -5,3 +5,18 @@
 [![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/mtchavez/circlecli)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mtchavez/circlecli)](https://goreportcard.com/report/github.com/mtchavez/circlecli)
 [![Go Cover](http://gocover.io/_badge/github.com/mtchavez/circlecli)](http://gocover.io/github.com/mtchavez/circlecli)
+
+## Docker
+
+Installing via docker
+
+```
+docker build -t circlecli .
+```
+
+Using image to run CLI commands, can pass in `env-file` or `env` flags to be used
+by the CLI.
+
+```
+docker run -it --env CIRCLECI_TOKEN=<TOKEN> --rm circlecli circlecli
+```
