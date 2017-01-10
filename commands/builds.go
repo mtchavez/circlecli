@@ -5,9 +5,15 @@ import (
 	"net/url"
 	"os"
 	"text/tabwriter"
+	"time"
 
 	circleci "github.com/mtchavez/circlecigo"
 	"github.com/urfave/cli"
+)
+
+const (
+	timeShortFormat = "2017-01-10 19:59"
+	timeAPIFormat   = "2017-01-10T19:59:03.526Z"
 )
 
 // BuildsCmd - recent builds for a project
@@ -50,9 +56,12 @@ func buildsAction(context *cli.Context) error {
 	} else {
 		builds, _ = client.ProjectRecentBuilds(context.String("user"), context.String("project"), params)
 	}
-	fmt.Fprintln(writer, "Build\tBranch\tUser\tStatus\t")
+	fmt.Fprintln(writer, "Build\tBranch\tUser\tStatus\tTime\tFinished")
 	for _, build := range builds {
-		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t", build.BuildNum, build.Branch, build.CommitterName, build.Status))
+		buildTime := fmt.Sprintf("%+v", time.Duration(build.BuildTimeMillis)*time.Millisecond)
+		parsedStopTime, _ := time.Parse(time.RFC3339, build.StopTime)
+		formattedStopTime := parsedStopTime.Format(time.RFC822)
+		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t%s\t%s\t", build.BuildNum, build.Branch, build.CommitterName, build.Status, buildTime, formattedStopTime))
 	}
 	writer.Flush()
 	return nil
