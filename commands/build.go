@@ -14,7 +14,7 @@ import (
 var BuildCmd = cli.Command{
 	Name:        "build",
 	Usage:       "build project and interact with builds",
-	Flags:       buildFlags,
+	Flags:       append(buildFlags, branchFlag),
 	Action:      buildProjectAction,
 	Subcommands: buildSubcommands,
 }
@@ -42,7 +42,16 @@ var buildSubcommands = []cli.Command{
 func buildProjectAction(context *cli.Context) error {
 	token := context.GlobalString("token")
 	client := circleci.NewClient(token)
-	build, resp := client.NewBuild(context.String("user"), context.String("project"), nil)
+	user := context.String("user")
+	project := context.String("project")
+	branch := context.String("branch")
+	var build *circleci.Build
+	var resp *circleci.APIResponse
+	if branch != "" {
+		build, resp = client.BuildBranch(user, project, branch, nil)
+	} else {
+		build, resp = client.NewBuild(user, project, nil)
+	}
 	if resp.Success() {
 		padding := 1
 		writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
