@@ -59,8 +59,11 @@ func buildsAction(context *cli.Context) error {
 	fmt.Fprintln(writer, "Build\tBranch\tUser\tStatus\tTime\tFinished")
 	for _, build := range builds {
 		buildTime := fmt.Sprintf("%+v", time.Duration(build.BuildTimeMillis)*time.Millisecond)
-		parsedStopTime, _ := time.Parse(time.RFC3339, build.StopTime)
-		formattedStopTime := parsedStopTime.Format(time.RFC822)
+		formattedStopTime := ""
+		if build.StopTime != "" {
+			parsedStopTime, _ := time.Parse(time.RFC3339, build.StopTime)
+			formattedStopTime = parsedStopTime.Format(time.RFC822)
+		}
 		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t%s\t%s\t", build.BuildNum, build.Branch, build.CommitterName, build.Status, buildTime, formattedStopTime))
 	}
 	writer.Flush()
