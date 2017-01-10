@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"text/tabwriter"
+	"time"
 
 	circleci "github.com/mtchavez/circlecigo"
 	"github.com/urfave/cli"
@@ -23,10 +24,13 @@ func recentBuildAction(context *cli.Context) error {
 	padding := 1
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, padding, '\t', tabwriter.AlignRight)
 	builds, _ := client.RecentBuilds(nil)
-	fmt.Fprintln(writer, "Build\tProject\tBranch\tUser\tStatus\t")
+	fmt.Fprintln(writer, "Build\tProject\tBranch\tUser\tStatus\tTime\tFinished")
 	for _, build := range builds {
 		project := fmt.Sprintf("%s/%s", build.Username, build.Reponame)
-		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t%s\t", build.BuildNum, project, build.Branch, build.CommitterName, build.Status))
+		buildTime := fmt.Sprintf("%+v", time.Duration(build.BuildTimeMillis)*time.Millisecond)
+		parsedStopTime, _ := time.Parse(time.RFC3339, build.StopTime)
+		formattedStopTime := parsedStopTime.Format(time.RFC822)
+		fmt.Fprintln(writer, fmt.Sprintf("%d\t%s\t%s\t%s\t%s\t%s\t%s\t", build.BuildNum, project, build.Branch, build.CommitterName, build.Status, buildTime, formattedStopTime))
 	}
 	writer.Flush()
 	return nil
