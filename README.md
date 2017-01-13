@@ -8,15 +8,22 @@
 
 ## Docker
 
-Installing via docker
+Building from source via docker and running image
 
 ```
 docker build -t circlecli .
+docker run -it -rm circlecli --help
+```
+
+Installing from docker hub
+
+```
+docker pull mtchavez/circlecli
 ```
 
 Using image to run CLI commands, can pass in `env-file` or `env` flags to be used
 by the CLI.
 
 ```
-docker run -it --env CIRCLECI_TOKEN=<TOKEN> --rm circlecli circlecli
+docker run -it --env CIRCLECI_TOKEN=<TOKEN> --rm mtchavez/circlecli --help
 ```
