@@ -159,3 +159,27 @@ func (client *Client) BuildTests(username, project string, buildNum int) (*Build
 	apiResp := client.request(http.MethodGet, path, nil, nil, tests)
 	return tests, apiResp
 }
+
+// RunTime calculates the running time of a build. If it is not finished
+// the StartTime will be used to calculate a total RunTime. If a build
+// has finished and has a RunTimeMillis that is used to calculate a
+// total running time
+func (build *Build) RunTime() time.Duration {
+	if build.finishedRunning() {
+		return time.Millisecond * time.Duration(build.BuildTimeMillis)
+	}
+
+	parsedStartTime, parseErr := time.Parse(time.RFC3339, build.StartTime)
+	if parseErr != nil {
+		return time.Duration(0) * time.Second
+	}
+	return time.Since(parsedStartTime)
+}
+
+func (build *Build) finishedRunning() bool {
+	return build.BuildTimeMillis != 0 && build.StopTime != ""
+}
+
+func (build *Build) startedRunning() bool {
+	return build.BuildTimeMillis != 0 && build.StartTime != ""
+}
