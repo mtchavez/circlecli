@@ -27,7 +27,7 @@ func recentBuildAction(context *cli.Context) error {
 	fmt.Fprintln(writer, "Build\tProject\tBranch\tUser\tStatus\tTime\tFinished")
 	for _, build := range builds {
 		project := fmt.Sprintf("%s/%s", build.Username, build.Reponame)
-		buildTime := fmt.Sprintf("%+v", time.Duration(build.BuildTimeMillis)*time.Millisecond)
+		buildTime := fmt.Sprintf("%+v", build.RunTime())
 		formattedStopTime := ""
 		if build.StopTime != "" {
 			parsedStopTime, _ := time.Parse(time.RFC3339, build.StopTime)
