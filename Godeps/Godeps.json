@@ -1,11 +1,11 @@
 {
 	"ImportPath": "github.com/mtchavez/circlecli",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v75",
+	"GodepVersion": "v77",
 	"Deps": [
 		{
 			"ImportPath": "github.com/mtchavez/circlecigo",
-			"Rev": "4563e0dd9baf653a28960b287c84f7df67c47928"
+			"Rev": "9557071a71f1f86eda3afe05e7030335c7c7306f"
 		},
 		{
 			"ImportPath": "github.com/urfave/cli",
