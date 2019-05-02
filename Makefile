@@ -1,14 +1,13 @@
 GOPKGS = \
 		golang.org/x/tools/cmd/cover \
 		github.com/golang/lint/golint \
-		github.com/tools/godep
+
 default: test
 
 ci: deps test
 
 deps:
 	@go get -u -v $(GOPKGS)
-	@if [ `which godep` ] && [ -f ./Godeps/Godeps.json ]; then godep restore; fi
 
 build: pre_test
 	@./script/build
