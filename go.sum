@@ -1,0 +1,4 @@
+github.com/mtchavez/circlecigo v0.0.0-20170113212105-9557071a71f1 h1:zIF7snsXLwOWZPk3rgVBjFciqF9iKfQKYDJ/2hOlKvo=
+github.com/mtchavez/circlecigo v0.0.0-20170113212105-9557071a71f1/go.mod h1:fndSS5SExcotWZhxBdLit46WoOMxnuo4UkmPUwZBzN8=
+github.com/urfave/cli v1.19.1 h1:0mKm4ZoB74PxYmZVua162y1dGt1qc10MyymYRBf3lb8=
+github.com/urfave/cli v1.19.1/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
