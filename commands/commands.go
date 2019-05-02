@@ -25,10 +25,9 @@ var (
 		Usage: "use VAR name for get and VAR=value for set",
 	}
 	filterFlag = cli.StringFlag{
-		Name:   "filter, f",
-		Value:  "",
-		Usage:  "filter by status of build ie. successful, failed, running",
-		EnvVar: "CIRCLECI_ORG,CIRCLECI_USER",
+		Name:  "filter, f",
+		Value: "",
+		Usage: "filter by status of build ie. successful, failed, running",
 	}
 	limitFlag = cli.StringFlag{
 		Name:  "limit, l",
