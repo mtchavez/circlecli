@@ -1,5 +1,4 @@
 FROM golang:1.12-alpine
-MAINTAINER "Chavez <matthew@el-chavez.me>"
 
 ENV APP_NAME=github.com/mtchavez/circlecli
 ENV APP_DIR=$GOPATH/src/$APP_NAME

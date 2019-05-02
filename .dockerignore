@@ -1,0 +1,8 @@
+.git
+LICENSE
+README*
+Makefile
+vendor
+script
+builds
+Dockerfile
