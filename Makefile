@@ -7,7 +7,7 @@ default: test
 ci: deps test
 
 deps:
-	@go get -u -v $(GOPKGS)
+	@go get -v $(GOPKGS)
 
 build: pre_test
 	@./script/build
