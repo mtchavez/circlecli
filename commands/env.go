@@ -12,8 +12,8 @@ import (
 
 // EnvCmd - get env settings for a project
 var EnvCmd = cli.Command{
-	Name:        "env",
-	Usage:       "get env settings for a project",
+	Name:        "environ",
+	Usage:       "get environment settings for a project",
 	Flags:       envFlags,
 	Action:      envListAction,
 	Subcommands: envSubcommands,
